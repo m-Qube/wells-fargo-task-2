@@ -4,17 +4,14 @@ import jakarta.persistence.*;
 public class SystemStatus {
 
     @Id
-    @GeneratedValue()
-    private long systemId;
-
-    @OneToOne(mappedBy = "systemStatus")
-    private Client client;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long systemId;
 
     @Column(nullable = false)
-    private boolean uptime;
+    private double uptime;
 
     @Column(nullable = false)
-    private String timestamp;
+    private long timestamp;
 
     @Column(nullable = false)
     private String dashboardConfig;
@@ -22,43 +19,36 @@ public class SystemStatus {
     @Column(nullable = false)
     private String backendFramework;
 
-    protected SystemStatus() {
+    @OneToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
 
-    }
-
-    public SystemStatus(Client client, boolean uptime, String timestamp, String dashboardConfig, String backendFramework) {
-        this.client = client;
+    // Constructor
+    public SystemStatus(double uptime, long timestamp, String dashboardConfig, String backendFramework) {
         this.uptime = uptime;
         this.timestamp = timestamp;
         this.dashboardConfig = dashboardConfig;
         this.backendFramework = backendFramework;
     }
 
-    public long getSystemId() {
+    // Getters and Setters
+    public Long getSystemId() {
         return systemId;
     }
 
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public boolean isUptime() {
+    public double getUptime() {
         return uptime;
     }
 
-    public void setUptime(boolean uptime) {
+    public void setUptime(double uptime) {
         this.uptime = uptime;
     }
 
-    public String getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -76,5 +66,13 @@ public class SystemStatus {
 
     public void setBackendFramework(String backendFramework) {
         this.backendFramework = backendFramework;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

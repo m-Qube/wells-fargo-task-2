@@ -1,15 +1,19 @@
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 public class Client {
 
     @Id
-    @GeneratedValue()
-    private long clientId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long clientId;
 
     @ManyToOne
     @JoinColumn(name = "advisor_id")
     private Advisor advisor;
+
+    @OneToMany(mappedBy = "client")
+    private List<Portfolio> portfolios;
 
     @Column(nullable = false)
     private String name;
@@ -20,10 +24,7 @@ public class Client {
     @Column(nullable = false)
     private String phone;
 
-    protected Client() {
-
-    }
-
+    // Constructor
     public Client(Advisor advisor, String name, String email, String phone) {
         this.advisor = advisor;
         this.name = name;
@@ -31,7 +32,8 @@ public class Client {
         this.phone = phone;
     }
 
-    public long getClientId() {
+    // Getters and Setters
+    public Long getClientId() {
         return clientId;
     }
 
@@ -41,6 +43,14 @@ public class Client {
 
     public void setAdvisor(Advisor advisor) {
         this.advisor = advisor;
+    }
+
+    public List<Portfolio> getPortfolios() {
+        return portfolios;
+    }
+
+    public void setPortfolios(List<Portfolio> portfolios) {
+        this.portfolios = portfolios;
     }
 
     public String getName() {

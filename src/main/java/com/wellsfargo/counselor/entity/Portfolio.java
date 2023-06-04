@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 public class Portfolio {
 
     @Id
-    @GeneratedValue()
-    private long portfolioId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long portfolioId;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -17,17 +17,15 @@ public class Portfolio {
     @Column(nullable = false)
     private String creationDate;
 
-    protected Portfolio() {
-
-    }
-
+    // Constructor
     public Portfolio(Client client, String type, String creationDate) {
         this.client = client;
         this.type = type;
         this.creationDate = creationDate;
     }
 
-    public long getPortfolioId() {
+    // Getters and Setters
+    public Long getPortfolioId() {
         return portfolioId;
     }
 

@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 public class Security {
 
     @Id
-    @GeneratedValue()
-    private long securityId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long securityId;
 
     @ManyToOne
     @JoinColumn(name = "portfolio_id")
@@ -23,10 +23,7 @@ public class Security {
     @Column(nullable = false)
     private int quantity;
 
-    protected Security() {
-
-    }
-
+    // Constructor
     public Security(Portfolio portfolio, String name, String purchaseDate, double purchasePrice, int quantity) {
         this.portfolio = portfolio;
         this.name = name;
@@ -35,7 +32,8 @@ public class Security {
         this.quantity = quantity;
     }
 
-    public long getSecurityId() {
+    // Getters and Setters
+    public Long getSecurityId() {
         return securityId;
     }
 
